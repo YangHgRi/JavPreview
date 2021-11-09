@@ -18,18 +18,34 @@ public class MainProcess {
   }
 
   private static String getUrl(String letters, String numbers) {
-    return "https://cc3001.dmm.co.jp/litevideo/freepv/"
-        + letters.charAt(0)
-        + "/"
-        + letters.substring(0, 3)
-        + "/"
-        + letters
-        + "00"
-        + numbers
-        + "/"
-        + letters
-        + "00"
-        + numbers
-        + "_dmb_w.mp4";
+    if (letters.length() < 3) {
+      return "https://cc3001.dmm.co.jp/litevideo/freepv/"
+          + letters.charAt(0)
+          + "/"
+          + letters
+          + "/"
+          + letters
+          + "00"
+          + numbers
+          + "/"
+          + letters
+          + "00"
+          + numbers
+          + "_dmb_w.mp4";
+    } else {
+      return "https://cc3001.dmm.co.jp/litevideo/freepv/"
+          + letters.charAt(0)
+          + "/"
+          + letters.substring(0, 3)
+          + "/"
+          + letters
+          + "00"
+          + numbers
+          + "/"
+          + letters
+          + "00"
+          + numbers
+          + "_dmb_w.mp4";
+    }
   }
 }
