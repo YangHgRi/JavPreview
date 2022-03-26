@@ -28,11 +28,20 @@
   </dependencies>
 
   <build>
+    <finalName>AVP</finalName><!--修改编译出来的jar包名，仅为{artifactId}.jar-->
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.6.4</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.yanghgri.Application</mainClass> <!-- 此处为主入口-->
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
     </plugins>
   </build>
