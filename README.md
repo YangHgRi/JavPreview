@@ -1,4 +1,4 @@
-# View or Download av preview video on browser.
+# View or Download Movie preview video on browser.
 > Enter av id to console
 > > e.g:abc-100,def-100  
   
