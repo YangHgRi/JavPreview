@@ -8,4 +8,4 @@ RUN cd $JAVA_DIR \
 ENV JAVA_HOME=$JAVA_DIR/jdk8
 ENV PATH=$PATH:$JAVA_HOME/bin
 EXPOSE 8090
-ENTRYPOINT java -jar /tmp/AVP.jar
+ENTRYPOINT java -jar /tmp/AVP.jar --server.port=8090

@@ -1,0 +1,29 @@
+Configuration:
+  name: dev
+  Properties:
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: "%d [%p] %C [%M]: %m%n%ex"
+    RollingFile:
+      name: RollingFile
+      fileName: "./logs/log4j2.log"
+      filePattern: "./logs/$${date:yyyy-MM}/log4j2-%d{yyyy-MM-dd HH}-%i.log"
+      PatternLayout:
+        pattern: "%d [%p] %C [%M]: %m%n"
+      Policies:
+        TimeBasedTriggeringPolicy:
+          interval: 3
+          modulate: true
+        SizeBasedTriggeringPolicy:
+          size: 10 MB
+      DefaultRolloverStrategy:
+        max: 4
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console
+        - ref: RollingFile
