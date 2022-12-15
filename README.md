@@ -1,5 +1,5 @@
-# View or Download av preview video on browser.
-> Enter av id to console
+# View or Download Movie preview video on browser.
+> Enter Movie id to console
 > > e.g:abc-100,def-100  
   
 Then preview video url well auto open in browser.
