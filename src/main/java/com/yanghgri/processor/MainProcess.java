@@ -4,7 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author YangHgRi
@@ -12,13 +14,18 @@ import java.util.Map;
 public class MainProcess {
     private static final int LIMITED_LENGTH = 3;
     private static final NumberFormat NUMBER_FORMATTER = NumberFormat.getInstance();
-    private static final String URL_PREFIX = "https://cc3001.dmm.co.jp/litevideo/freepv/";
+    private static final String FANZA_URL_PREFIX = "https://cc3001.dmm.co.jp/litevideo/freepv/";
+    private static final String MGS_URL_PREFIX = "https://sample.mgstage.com/sample/prestige/";
     private static final Map<String, String> POST_PROCESS_MAP = new HashMap<>();
+    private static final Set<String> MGS_LETTERS_SET = new HashSet<>();
 
     static {
         NUMBER_FORMATTER.setGroupingUsed(false);
         NUMBER_FORMATTER.setMinimumIntegerDigits(5);
         NUMBER_FORMATTER.setMaximumIntegerDigits(5);
+
+        MGS_LETTERS_SET.add("abp");
+        MGS_LETTERS_SET.add("abw");
 
         POST_PROCESS_MAP.put("stars", "1stars");
         POST_PROCESS_MAP.put("sdmua", "1sdmua");
@@ -51,17 +58,19 @@ public class MainProcess {
             }
 
             if (letters.startsWith("1")) {
-                urls[i] = getUrl(letters, lettersAndNumbers[1]);
+                urls[i] = getUrlForFanza(letters, lettersAndNumbers[1]);
+            } else if (MGS_LETTERS_SET.contains(letters)) {
+                urls[i] = getUlrForMGS(letters, lettersAndNumbers[1]);
             } else {
-                urls[i] = getUrl(letters, NUMBER_FORMATTER.format(Long.valueOf(lettersAndNumbers[1])));
+                urls[i] = getUrlForFanza(letters, NUMBER_FORMATTER.format(Long.valueOf(lettersAndNumbers[1])));
             }
         }
         return urls;
     }
 
-    private static String getUrl(String letters, String numbers) {
+    private static String getUrlForFanza(String letters, String numbers) {
         StringBuilder urlBuilder = new StringBuilder();
-        urlBuilder.append(URL_PREFIX).append(letters.charAt(0)).append("/");
+        urlBuilder.append(FANZA_URL_PREFIX).append(letters.charAt(0)).append("/");
 
         if (letters.length() < LIMITED_LENGTH) {
             urlBuilder.append(letters);
@@ -71,5 +80,9 @@ public class MainProcess {
 
         urlBuilder.append("/").append(letters).append(numbers).append("/").append(letters).append(numbers).append("_mhb_w.mp4");
         return urlBuilder.toString();
+    }
+
+    private static String getUlrForMGS(String letters, String numbers) {
+        return MGS_URL_PREFIX + letters + "/" + numbers + "/" + letters.toUpperCase() + "-" + numbers + ".mp4";
     }
 }
