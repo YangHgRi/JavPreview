@@ -11,6 +11,7 @@ public class MainProcess {
     private static final int LIMITED_LENGTH = 3;
     private static final NumberFormat NUMBER_FORMATTER = NumberFormat.getInstance();
     private static final String URL_PREFIX = "https://cc3001.dmm.co.jp/litevideo/freepv/";
+    public static final String[] SOD_CREATE = {"stars", "sdmua", "sdmm", "sdde", "sdmf", "star", "sdab", "sdnm", "sdjs"};
 
     static {
         NUMBER_FORMATTER.setGroupingUsed(false);
@@ -27,9 +28,19 @@ public class MainProcess {
         for (int i = 0; i < avIds.length; i++) {
             String[] lettersAndNumbers = StringUtils.split(avIds[i], "-", 0);
             String letters = lettersAndNumbers[0];
-            String numbersWithZeroFill = NUMBER_FORMATTER.format(Long.valueOf(lettersAndNumbers[1]));
 
-            urls[i] = getUrl(letters, numbersWithZeroFill);
+            for (String s : SOD_CREATE) {
+                if (letters.equals(s)) {
+                    letters = "1" + letters;
+                    break;
+                }
+            }
+
+            if (letters.startsWith("1")) {
+                urls[i] = getUrl(letters, lettersAndNumbers[1]);
+            } else {
+                urls[i] = getUrl(letters, NUMBER_FORMATTER.format(Long.valueOf(lettersAndNumbers[1])));
+            }
         }
         return urls;
     }
